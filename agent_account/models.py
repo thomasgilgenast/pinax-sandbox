@@ -44,14 +44,11 @@ class NYTBrokerInfo(models.Model):
     
     def __unicode__(self):
         return self.generic_info.user.username + "'s NYTBrokerInfo"
-        
-        
-def listing_picture_upload_to(instance, filename):
-    return '/'.join(['images', instance.listing.id, filename])
 
-class ListingPicture(models.Model):
-    listing = models.ForeignKey(Listing)
-    img = models.ImageField(upload_to=listing_picture_upload_to)
+# not sure that this is needed
+#class ListingPicture(models.Model):
+#    listing = models.ForeignKey(Listing)
+#    img = models.ImageField(upload_to=listing_picture_upload_to)
     
     def __unicode__(self):
         return self.listing.user.username + "'s picture: " + os.path.basename(self.file.name)
@@ -75,6 +72,10 @@ class Listing(models.Model):
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=15)
     monthly_maintenance = models.DecimalField(_('price'), decimal_places=2, max_digits=15)
     bedrooms = models.IntegerField(_('number of bedrooms'))
-    
-    
-    def create(cls, request=None, **kwargs):
+
+    # set listing_id on create
+    #def create(cls, request=None, **kwargs):
+
+        
+def listing_picture_upload_to(instance, filename):
+    return '/'.join(['images', instance.listing.id, filename])

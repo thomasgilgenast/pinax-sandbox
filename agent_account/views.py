@@ -336,6 +336,7 @@ class BrokersEditView(UpdateView):
                 self.messages['broker_updated']['text']
             )
         super(BrokersEditView, self).form_valid(form)
+        return redirect(self.get_success_url())
     
     def get_success_url(self):
         return reverse('account_brokers_edit', kwargs={'id': self.kwargs['id']})

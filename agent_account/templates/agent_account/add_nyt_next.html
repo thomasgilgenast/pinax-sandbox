@@ -1,0 +1,18 @@
+{% extends "agent_account/base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% block head_title %}{% trans "Set Up NYT Broker Account: Step 2 of 2" %}{% endblock %}
+
+{% block body %}
+    <form method="GET" action="{% url "account_brokers_send_email_nyt" %}">
+        <legend>{% trans "Set Up NYT Broker Account: Step 2 of 2" %}</legend>
+        <p>{% trans 'If you have created listings, you can click the button below and the system will send an email to your CSA at the New York Times with the information required. This includes the company name and company ID you provided, as well as a test file constructed from your current listings. When your test file is approved, your CSA will email you back with FTP login details. Once you receive the email, you can choose "Edit" on the Brokers page and fill in the FTP login information there.' %}</p>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">{% trans "Send email" %}</button>
+            <a class="btn" href="{% url 'account_brokers' %}">{% trans "Go back to Brokers" %}</a>
+        </div>
+    </form>
+{% endblock %}

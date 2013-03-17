@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<li><a href="#"><i class="icon-shopping-cart"></i> {% trans "Billing" %}</a></li>
+<li><a href="#"><i class="icon-play"></i> {% trans "Trial" %}</a></li>
+<li><a href="{% url account_brokers %}"><i class="icon-tasks"></i> {% trans "Brokers" %}</a></li>
+<li><a href="{% url account_profile %}"><i class="icon-user"></i> {% trans "Profile" %}</a></li>
+<li><a href="{% url account_settings %}"><i class="icon-wrench"></i> {% trans "Settings" %}</a></li>
+<li><a href="{% url account_password %}"><i class="icon-lock"></i> {% trans "Change password" %}</a></li>
+<li class="divider"></li>
+<li><a href="{% url account_logout %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>

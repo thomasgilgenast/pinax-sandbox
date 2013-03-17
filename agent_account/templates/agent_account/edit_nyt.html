@@ -1,0 +1,20 @@
+{% extends "agent_account/base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% block head_title %}{% trans "Edit NYT Broker Info" %}{% endblock %}
+
+{% block body %}
+    <form enctype="multipart/form-data" method="POST" action="{% url "account_brokers_edit" broker_id %}">
+        <legend>{% trans "Edit NYT Broker Info" %}</legend>
+        {% csrf_token %}
+        {{ form|as_bootstrap }}
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
+            <a class="btn btn-warning" href="{% url 'account_brokers_send_email_nyt' %}">{% trans "Resend email to CSA" %}</a>
+            <a class="btn" href="{% url 'account_brokers' %}">{% trans "Go back to Brokers" %}</a>
+        </div>
+    </form>
+{% endblock %}

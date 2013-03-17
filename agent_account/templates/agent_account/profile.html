@@ -1,0 +1,18 @@
+{% extends "agent_account/base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% block head_title %}{% trans "Profile" %}{% endblock %}
+
+{% block body %}
+    <form enctype="multipart/form-data" method="POST" action="{% url "account_profile" %}">
+        <legend>{% trans "Profile" %}</legend>
+        {% csrf_token %}
+        {{ form|as_bootstrap }}
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
+        </div>
+    </form>
+{% endblock %}

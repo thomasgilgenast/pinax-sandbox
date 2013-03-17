@@ -1,0 +1,41 @@
+{% extends "agent_account/base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% block head_title %}{% trans "Brokers" %}{% endblock %}
+
+{% block body %}
+    <form method="POST" action="{% url "account_brokers" %}">
+        <legend>{% trans "Brokers" %}</legend>
+        {% csrf_token %}
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>{% trans "Broker Name" %}</td>
+                    <th>{% trans "Add/Edit" %}</td>
+                    <th>{% trans "Active" %}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row.broker.name }}</td>
+                    {% if row.edit %}
+                        <td><a class="btn btn-mini btn-primary" href="{% url 'account_brokers_edit' id=row.broker.id %}">{% trans "Edit" %}</a></td>
+                        {% if row.active %}
+                            <td><a class="btn btn-mini btn-success" href="{% url 'account_brokers_deactivate' id=row.broker.id %}">{% trans "Active" %}</a></td>
+                        {% else %}
+                            <td><a class="btn btn-mini btn-danger" href="{% url 'account_brokers_activate' id=row.broker.id %}">{% trans "Inactive" %}</a></td>
+                        {% endif %}
+                    {% else %}
+                        <td><a class="btn btn-mini btn-primary" href="{% url 'account_brokers_add' id=row.broker.id %}">{% trans "Add" %}</a></td>
+                        <td><a class="btn btn-mini btn-danger disabled" href="">{% trans "Inactive" %}</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+{% endblock %}

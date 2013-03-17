@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
+from .choices import *
+
 def profile_picture_upload_to(instance, filename):
     return '/'.join(['profilepics', str(instance.id), filename])
 
@@ -42,3 +44,37 @@ class NYTBrokerInfo(models.Model):
     
     def __unicode__(self):
         return self.generic_info.user.username + "'s NYTBrokerInfo"
+        
+        
+def listing_picture_upload_to(instance, filename):
+    return '/'.join(['images', instance.listing.id, filename])
+
+class ListingPicture(models.Model):
+    listing = models.ForeignKey(Listing)
+    img = models.ImageField(upload_to=listing_picture_upload_to)
+    
+    def __unicode__(self):
+        return self.listing.user.username + "'s picture: " + os.path.basename(self.file.name)
+        
+class Listing(models.Model):
+    user = models.ForeignKey(User)
+    # flags
+    is_sold = models.BooleanField(default=False)
+    push_nyt = models.BooleanField(default=False)
+    # real fields
+    listing_id = models.CharField(max_length=40, editable=False)
+    street_number = models.CharField(_('street number'), max_length=10)
+    street_name = models.CharField(_('street name'), max_length=39)
+    apt_number = models.CharField(_('apartment/unit number'), max_length=50, blank=True)
+    headline = models.CharField(_('headline'), max_length=99, blank=True)
+    cross_street = models.CharField(_('cross street'), max_length=150, blank=True)
+    city = models.CharField(_('city'), max_length=150)
+    state = models.CharField(_('state/province'), max_length=2, choices=STATE_CHOICES)
+    zip_code = models.CharField(_('zip/postal code'), max_length=6)
+    country = models.CharField(_('country'), max_length=3, choices=COUNTRY_CHOICES, default='USA')
+    price = models.DecimalField(_('price'), decimal_places=2, max_digits=15)
+    monthly_maintenance = models.DecimalField(_('price'), decimal_places=2, max_digits=15)
+    bedrooms = models.IntegerField(_('number of bedrooms'))
+    
+    
+    def create(cls, request=None, **kwargs):
